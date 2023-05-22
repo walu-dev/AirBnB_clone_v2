@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/python3
 """Defines unittests for models/state.py.
 
@@ -187,3 +188,12 @@ class TestState_to_dict(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+=======
+from models.state import State
+import unittest
+
+
+class Test(unittest.TestCase):
+    def test_state(self):
+        self.assertEqual("", State().name)
+>>>>>>> 174ffdf755857fff6d47ed33321866a6c6e1c698

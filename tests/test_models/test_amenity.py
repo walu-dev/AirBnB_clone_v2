@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/python3
 """Defines unittests for models/amenity.py.
 
@@ -188,3 +189,12 @@ class TestAmenity_to_dict(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+=======
+from models.amenity import Amenity
+import unittest
+
+
+class Test(unittest.TestCase):
+    def test_amenity(self):
+        self.assertEqual("", Amenity().name)
+>>>>>>> 174ffdf755857fff6d47ed33321866a6c6e1c698

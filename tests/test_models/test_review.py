@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  unittests for models/review.py.
 
 Unittest classes:
@@ -198,3 +199,12 @@ class TestReview_to_dict(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+=======
+from models.review import Review
+import unittest
+
+
+class TestReview(unittest.TestCase):
+    def test_review(self):
+        self.assertEqual("", Review().text)
+>>>>>>> 174ffdf755857fff6d47ed33321866a6c6e1c698

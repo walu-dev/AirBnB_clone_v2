@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/python3
 """Defines unittests for models/place.py.
 
@@ -247,3 +248,12 @@ class TestPlace_to_dict(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+=======
+from models.place import Place
+import unittest
+
+
+class TestPlace(unittest.TestCase):
+    def test_place(self):
+        self.assertEqual("", Place().name)
+>>>>>>> 174ffdf755857fff6d47ed33321866a6c6e1c698

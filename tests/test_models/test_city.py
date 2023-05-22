@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/usr/bin/python3
 """Defines unittests for models/city.py.
 
@@ -193,3 +194,12 @@ class TestCity_to_dict(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+=======
+from models.city import City
+import unittest
+
+
+class Test(unittest.TestCase):
+    def test_city(self):
+        self.assertEqual("", City().name)
+>>>>>>> 174ffdf755857fff6d47ed33321866a6c6e1c698

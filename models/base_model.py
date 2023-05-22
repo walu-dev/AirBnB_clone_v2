@@ -1,56 +1,49 @@
 #!/usr/bin/python3
-"""This script is the base model"""
+"""base model"""
 
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
-
-    """Class from which all other classes will inherit"""
-
+    """Class defining all common attributes/methods for other classes"""
     def __init__(self, *args, **kwargs):
-        """Initializes instance attributes
-
-        Args:
-            - *args: list of arguments
-            - **kwargs: dict of key-values arguments
-        """
-
-        if kwargs is not None and kwargs != {}:
-            for key in kwargs:
-                if key == "created_at":
-                    self.__dict__["created_at"] = datetime.strptime(
-                        kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                elif key == "updated_at":
-                    self.__dict__["updated_at"] = datetime.strptime(
-                        kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
-                else:
-                    self.__dict__[key] = kwargs[key]
+        if len(kwargs) != 0:
+            # for key, value in kwargs.items():
+            #     setattr(self, key, value)
+            self.__dict__.update(kwargs)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
+        if type(self.created_at) is str:
+            self.created_at = datetime.fromisoformat(self.created_at)
+            # re-format to datetime type to be able to use to_dict()
+        if type(self.updated_at) is str:
+            self.updated_at = datetime.fromisoformat(self.updated_at)
+            # re-format to datetime type to be able to use to_dict()
 
     def __str__(self):
-        """Returns official string representation"""
-
-        return "[{}] ({}) {}".\
-            format(type(self).__name__, self.id, self.__dict__)
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        """updates the public instance attribute updated_at"""
-
         self.updated_at = datetime.now()
-        storage.save()
+        # when saving the file, 'updated_at' is updated to current time
+        models.storage.save()
+        # saves to json file
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of __dict__"""
-
-        my_dict = self.__dict__.copy()
-        my_dict["__class__"] = type(self).__name__
-        my_dict["created_at"] = my_dict["created_at"].isoformat()
-        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
-        return my_dict
+        new_dict = {}
+        new_dict["__class__"] = f"{self.__class__.__name__}"
+        for key, value in self.__dict__.items():
+            if key == "updated_at":
+                new_dict[key] = self.updated_at.isoformat()
+            elif key == "created_at":
+                new_dict[key] = self.created_at.isoformat()
+            else:
+                new_dict[key] = value
+        return new_dict
+    """returns a copy of the dictionary representation of an object
+    but with isoformat for dates"""
